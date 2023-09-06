@@ -17,4 +17,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NikoraApi.Core\NikoraApi.Core.csproj" />
+    <ProjectReference Include="..\NikoraApi.Domain\NikoraApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
