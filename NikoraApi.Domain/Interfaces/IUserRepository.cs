@@ -10,6 +10,6 @@ namespace NikoraApi.Core.Repository
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
-        User? GetByUserName(string userName);
+        User CheckValidUser (User user);
     }
 }
