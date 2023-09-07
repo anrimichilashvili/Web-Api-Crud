@@ -12,7 +12,7 @@ namespace NikoraApi.Core.Repository
         where TEntity : class, IIdentity
     {
         private readonly NikDbContext _dbContext;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public BaseRepository(NikDbContext dbContext)
         {

@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace NikoraApi.Core.Repository
 {
-    public class UserRepository : BaseRepository<User>
+    public class UserRepository : BaseRepository<User>, IUserRepository 
     {
         public UserRepository(NikDbContext dbContext) : base(dbContext)
         {
 
+        }
+
+        public User? GetByUserName(string userName)
+        {
+            return _dbSet.SingleOrDefault(x => x.UserName == userName);
         }
     }
 }

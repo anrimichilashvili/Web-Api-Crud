@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NikoraApi.Core.Repository;
 using NikoraApi.Domain.Interfaces;
 using NikoraApi.Domain.Models;
 using NikoraApi.Dtos;
@@ -13,11 +14,11 @@ namespace NikoraApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IRepositoryBase<User> _userRepositoryBase;
-        public AuthController(IMapper mapper,IRepositoryBase<User> userRepositoryBase)
+        private readonly IUserRepository _userRepository;
+        public AuthController(IMapper mapper, IUserRepository userRepositoryBase)
         {
             _mapper = mapper;
-            _userRepositoryBase = userRepositoryBase;
+            _userRepository = userRepositoryBase;
         }
         // GET: api/<AuthController>
         [HttpGet]
@@ -35,9 +36,15 @@ namespace NikoraApi.Controllers
 
         // POST api/<AuthController>
         [HttpPost]
-        public void Login([FromBody] LoginRequestDto loginRequest)
+        public ActionResult<LoginResponseDto> Login([FromBody] LoginRequestDto loginRequest)
         {
-            //var user = _mapper.Map<>(loginRequest)
+            var user = _mapper.Map<User>(loginRequest);
+            bool isExist = _userRepository.GetByUserName(user.UserName) != null;
+
+            if (isExist) return NotFound(new LoginResponseDto() { Success = false, Message = "Invalid UserName/Password" });
+
+
+            return Ok();
         }
 
         // PUT api/<AuthController>/5
